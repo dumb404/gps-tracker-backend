@@ -14,12 +14,12 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("✅ Connected to MongoDB"))
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
-// Define Mongoose schema with deviceName format: Res + 3 digits + 6 digits
+// Schema: deviceName format = Res + 3 digit country code + 6 digit reg number (e.g. Res880000002)
 const gpsSchema = new mongoose.Schema({
   deviceName: {
     type: String,
     required: true,
-    match: /^Res[0-9]{3}[0-9]{6}$/ // Regex: Res + 3 digits + 6 digits
+    match: /^Res\d{3}\d{6}$/ // Regex: Res + 3 digits + 6 digits
   },
   latitude: {
     type: Number,
@@ -40,19 +40,17 @@ const GpsLocation = mongoose.model('GpsLocation', gpsSchema);
 // Middleware to parse JSON
 app.use(express.json());
 
-// POST endpoint to receive GPS data
+// POST endpoint
 app.post('/location', async (req, res) => {
   const { deviceName, latitude, longitude } = req.body;
 
   // Input validation
   if (
-    typeof deviceName !== 'string' || !/^Res[0-9]{3}[0-9]{6}$/.test(deviceName) ||
+    typeof deviceName !== 'string' || !/^Res\d{3}\d{6}$/.test(deviceName) ||
     typeof latitude !== 'number' ||
     typeof longitude !== 'number'
   ) {
-    return res.status(400).json({ 
-      message: 'Invalid input: deviceName must be in the format Res + 3 digits (country code) + 6 digits (reg number), e.g. Res880000002' 
-    });
+    return res.status(400).json({ message: 'Invalid input: deviceName must be in format Res + 3 digit country code + 6 digit reg number' });
   }
 
   try {
