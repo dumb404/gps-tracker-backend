@@ -1,7 +1,7 @@
 {
   "name": "gps-tracker-backend",
   "version": "1.0.0",
-  "description": "A backend server to receive GPS location and device name (6 digits + 3 letters) and store in MongoDB.",
+  "description": "A backend server to receive GPS location and device name (Res + 3 digits country code + 6 digits reg number) and store in MongoDB.",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
