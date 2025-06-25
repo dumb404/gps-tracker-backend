@@ -1,0 +1,18 @@
+{
+  "name": "gps-tracker-backend",
+  "version": "1.0.0",
+  "description": "A backend server to receive GPS location and device name (6 digits + 3 letters) and store in MongoDB.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["gps", "mongoose", "express", "a9g", "esp32", "mongodb", "iot"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.4"
+  }
+}
