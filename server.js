@@ -40,7 +40,12 @@ const GpsLocation = mongoose.model('GpsLocation', gpsSchema);
 // Middleware to parse JSON
 app.use(express.json());
 
-// POST endpoint
+// ✅ Home page route (fixes "Cannot GET /" error)
+app.get('/', (req, res) => {
+  res.send('✅ GPS Tracker Backend is running!');
+});
+
+// POST endpoint to receive GPS data
 app.post('/location', async (req, res) => {
   const { deviceName, latitude, longitude } = req.body;
 
@@ -56,9 +61,9 @@ app.post('/location', async (req, res) => {
   try {
     const location = new GpsLocation({ deviceName, latitude, longitude });
     await location.save();
-    res.status(200).json({ message: 'GPS data saved', location });
+    res.status(200).json({ message: '📍 GPS data saved', location });
   } catch (err) {
-    res.status(500).json({ message: 'Database error', error: err });
+    res.status(500).json({ message: '❌ Database error', error: err });
   }
 });
 
